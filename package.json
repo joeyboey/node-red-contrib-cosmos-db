@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joeyboey/node-red-cosmos-db.git"
+    "url": "git+https://github.com/joeyboey/node-red-cosmos-contrib-db.git"
   },
   "author": "Joe Schwerdtner",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/joeyboey/node-red-cosmos-db/issues"
+    "url": "https://github.com/joeyboey/node-red-cosmos-contrib-db/issues"
   },
-  "homepage": "https://github.com/joeyboey/node-red-cosmos-db#readme",
+  "homepage": "https://github.com/joeyboey/node-red-cosmos-contrib-db#readme",
   "dependencies": {
     "@azure/cosmos": "^3.9.1"
   }

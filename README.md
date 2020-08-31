@@ -1,2 +1,2 @@
-# node-red-cosmos-db
-Node Red Module for Azure Cosmos DB
+# node-red-contrib-cosmos-db
+Node Red Module to connect to Azure Cosmos DB
