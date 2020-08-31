@@ -2,11 +2,9 @@ module.exports = function (RED) {
     function CosmosConfigNode(n) {
         RED.nodes.createNode(this, n);
         this.name = n.name;
-        this.endpoint = n.endpoint;
-        this.key = n.key;
 
-        const endpoint = this.endpoint;
-        const key = this.key;
+        const endpoint = n.endpoint;
+        const key = n.key;
         const CosmosClient = require("@azure/cosmos").CosmosClient;
         this.client = new CosmosClient({ endpoint, key });
 

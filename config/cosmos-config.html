@@ -2,9 +2,9 @@
     RED.nodes.registerType('cosmos-config', {
         category: 'config',
         defaults: {
-            name: { value: "FRIENDLY NAME", required: true },
-            endpoint: { value: "https://[INSTANCE-NAME].documents.azure.com:443/", required: true },
-            key: { value: "PRIMARY KEY", required: true },
+            name: { value: "", required: true },
+            endpoint: { value: "", required: true },
+            key: { value: "", required: true },
         },
         label: function() {
             return this.name
@@ -15,14 +15,14 @@
 <script type="text/html" data-template-name="cosmos-config">
     <div class="form-row">
         <label for="node-config-input-name"><i class="fa fa-bookmark"></i> Name</label>
-        <input type="text" id="node-config-input-name">
+        <input type="text" id="node-config-input-name" placeholder="friendly name">
     </div>
     <div class="form-row">
         <label for="node-config-input-endpoint"><i class="fa fa-bookmark"></i> Endpoint</label>
-        <input type="text" id="node-config-input-endpoint">
+        <input type="text" id="node-config-input-endpoint" placeholder="https://[instance-name].documents.azure.com:443/">
     </div>
     <div class="form-row">
         <label for="node-config-input-key"><i class="fa fa-bookmark"></i> Key</label>
-        <input type="text" id="node-config-input-key">
+        <input type="text" id="node-config-input-key" placeholder="primary key">
     </div>
 </script>

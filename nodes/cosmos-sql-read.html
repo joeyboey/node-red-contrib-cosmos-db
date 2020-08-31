@@ -52,9 +52,48 @@
         <label for="node-input-container"><i class="fa fa-tag"></i> Container</label>
         <input type="text" id="node-input-container" placeholder="Container">
     </div>
-    <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-query-editor"></div>
+    <div class="form-row">
+        <label for="node-input-query-editor"><i class="fa fa-tag"></i> Query</label>
+        <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-query-editor"></div>
+    </div>
 </script>
 
 <script type="text/html" data-help-name="cosmos-sql-read">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+    <p>A node that allows to read from a Cosmos DB via the SQL Query Language.</p>
+
+    <h3>Properties</h3>
+        <dl class="message-properties">
+            <dt class="optional">Cosmos DB Config <span class="property-type">cosmos-config-node</span></dt>
+            <dd> Cosmos Database to connect with.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Name <span class="property-type">string</span></dt>
+            <dd> The displayed name of the node.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Database <span class="property-type">string</span></dt>
+            <dd> Database ID from the specified Cosmos DB.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Container <span class="property-type">string</span></dt>
+            <dd> Container ID within the specified database.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Query <span class="property-type">string</span></dt>
+            <dd> SQL Query to send to the database, can also be specified through <code>msg.topic</code>, this field overrides any values in <code>msg.topic</code> and overrides its value.</dd>
+        </dl>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt class="optional">topic <span class="property-type">string</span></dt>
+        <dd> Optional Parameter to set the desired Query through the <code>msg.topic</code> property. However, anything specified in the query parameter will override this.</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+        <ol class="node-ports">
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Outputs result from the database.</dd>
+            </dl>
+        </ol>
 </script>
