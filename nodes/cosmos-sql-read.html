@@ -1,0 +1,60 @@
+<script type="text/javascript">
+    RED.nodes.registerType('cosmos-sql-read', {
+        category: 'function',
+        color: '#4894fe',
+        defaults: {
+            name: { value: "Cosmos SQL", required: true },
+            config: { value: "", type: "cosmos-config", required: true },
+            database: { value: "", required: true },
+            container: { value: "", required: true },
+            query: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "db.svg",
+        label: function () {
+            return this.name || "cosmos-sql-read";
+        },
+        paletteLabel: "Cosmos SQL Read",
+        oneditprepare: function () {
+            this.editor = RED.editor.createEditor({
+                id: 'node-input-query-editor',
+                mode: 'ace/mode/sql',
+                value: this.query
+            });
+        },
+        oneditsave: function () {
+            this.query = this.editor.getValue();
+            this.editor.destroy();
+            delete this.editor;
+        },
+        oneditcancel: function () {
+            this.editor.destroy();
+            delete this.editor;
+        },
+    });
+</script>
+
+<script type="text/html" data-template-name="cosmos-sql-read">
+    <div class="form-row">
+        <label for="node-input-config"><i class="fa fa-tag"></i> Cosmos DB Config</label>
+        <input type="text" id="node-input-config" placeholder="Cosmos DB Config">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-database"><i class="fa fa-tag"></i> Database</label>
+        <input type="text" id="node-input-database" placeholder="Database">
+    </div>
+    <div class="form-row">
+        <label for="node-input-container"><i class="fa fa-tag"></i> Container</label>
+        <input type="text" id="node-input-container" placeholder="Container">
+    </div>
+    <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-query-editor"></div>
+</script>
+
+<script type="text/html" data-help-name="cosmos-sql-read">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+</script>
