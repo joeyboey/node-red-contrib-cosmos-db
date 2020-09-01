@@ -11,7 +11,7 @@
     "url": "git+https://github.com/joeyboey/node-red-contrib-cosmos-db.git"
   },
   "author": "Joe Schwerdtner",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/joeyboey/node-red-contrib-cosmos-db/issues"
   },
@@ -20,7 +20,12 @@
     "@azure/cosmos": "^3.9.1"
   },
   "keywords": [
-    "node-red"
+    "node-red",
+    "azure",
+    "cosmos",
+    "cosmos db",
+    "database",
+    "wrapper"
   ],
   "node-red": {
     "nodes": {

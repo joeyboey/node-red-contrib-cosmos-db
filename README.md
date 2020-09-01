@@ -1,5 +1,9 @@
 # node-red-contrib-cosmos-db
 
+[![NPM Version][npm-version-image]][npm-url]
+[![NPM Downloads][npm-downloads-image]][npm-url]
+[![Node.js Version][node-image]][node-url]
+
 Custom Nodes for [Node RED](https://nodered.org) to allow basic operations
 against an Azure Cosmos DB.
 
@@ -57,4 +61,15 @@ SELECT *
 FROM c
 ```
 
-The reference for the SQL-Syntax can be found in the [Microsoft SQL Docs](https://docs.microsoft.com/azure/cosmos-db/sql-query-getting-started).
+The reference for the SQL-Syntax can be found in the [Microsoft SQL Docs][microsoft-cosmos-sql-docs].
+
+## License
+
+[MIT](LICENSE)
+
+[npm-version-image]: https://img.shields.io/npm/v/node-red-contrib-cosmos-db.svg
+[npm-downloads-image]: https://img.shields.io/npm/dm/node-red-contrib-cosmos-db.svg
+[npm-url]: https://npmjs.org/package/node-red-contrib-cosmos-db
+[node-image]: https://img.shields.io/node/v/node-red-contrib-cosmos-db.svg
+[node-url]: https://nodejs.org/en/download
+[microsoft-cosmos-sql-docs]: https://docs.microsoft.com/azure/cosmos-db/sql-query-getting-started
