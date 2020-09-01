@@ -41,7 +41,8 @@ the option to create config nodes from within the normal nodes.
 
 You only need 2 parameters from your Cosmos Database:
 
-1. Your endpoint, usally something like this: `https://[instance-name].documents.azure.com:443/`
+1. Your endpoint, usally something like this:
+   `https://[instance-name].documents.azure.com:443/`
 2. The primary key, which is found under the **Keys** Tab in the Azure console.
 
 ### SQL Node
@@ -61,7 +62,34 @@ SELECT *
 FROM c
 ```
 
-The reference for the SQL-Syntax can be found in the [Microsoft SQL Docs][microsoft-cosmos-sql-docs].
+The reference for the SQL-Syntax can be found in the [Microsoft SQL
+Docs][microsoft-cosmos-sql-docs].
+
+#### Prepared Statements
+
+You also have the option to use prepared statements. For that the query has to
+be defined in the included editor within the node. This is to prevent
+SQL-Injection. Internally [sqlstring][sqlstring-npmjs] is used to properly escape values.
+
+The node uses `?variable` in the statement, so the query should look something like this:
+
+```sql
+SELECT *
+FROM c
+WHERE c.id = ?id
+  AND c.city = ?city
+```
+
+To fill the variables you use the `msg.params` object:
+
+```json
+{
+    "id": 1234,
+    "city": "Berlin"
+}
+```
+
+Note that this method can only be used to replace values, not table names and value names. Such a replacement cannot be safely achieved without the risk of SQL-Injection. If you need such a feature, you can always generate the required query in a function node and write it to the `msg.topic` object.
 
 ## License
 
@@ -73,3 +101,4 @@ The reference for the SQL-Syntax can be found in the [Microsoft SQL Docs][micros
 [node-image]: https://img.shields.io/node/v/node-red-contrib-cosmos-db.svg
 [node-url]: https://nodejs.org/en/download
 [microsoft-cosmos-sql-docs]: https://docs.microsoft.com/azure/cosmos-db/sql-query-getting-started
+[sqlstring-npmjs]: https://www.npmjs.com/package/sqlstring

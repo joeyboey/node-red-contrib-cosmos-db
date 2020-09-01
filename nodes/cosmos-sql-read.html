@@ -83,6 +83,20 @@
             <dd> SQL Query to send to the database, can also be specified through <code>msg.topic</code>, this field overrides any values in <code>msg.topic</code> and overrides its value.</dd>
         </dl>
 
+    <h3>Prepared Statements</h3>
+        You can realise prepared Statements via the <code>msg.params</code> property as json in the format of:<br>
+        <code>{"id": 1234, "city": "Berlin"}</code><br>
+        When using this feature you must declare the query in the editor within the node, this is to prevent SQL-Injection.<br>
+        The required format for the query is:<br>
+        <code>
+            SELECT *<br>
+            FROM c<br>
+            WHERE c.id = ?id<br>
+            AND c.city = ?city
+        </code><br>
+        Note that you can not prepare table names and variable names. For that you have to bear the risks of SQL injection.
+        If you need that feature you can always generate the required statement within a function node and write the result to <code>msg.topic</code>. 
+
     <h3>Inputs</h3>
     <dl class="message-properties">
         <dt class="optional">topic <span class="property-type">string</span></dt>

@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-cosmos-db",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "node red module to connect to azure cosmos db",
   "main": "./nodes/cosmos-nodes.js",
   "scripts": {
@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/joeyboey/node-red-contrib-cosmos-db#readme",
   "dependencies": {
-    "@azure/cosmos": "^3.9.1"
+    "@azure/cosmos": "^3.9.1",
+    "sqlstring": "^2.3.2"
   },
   "keywords": [
     "node-red",

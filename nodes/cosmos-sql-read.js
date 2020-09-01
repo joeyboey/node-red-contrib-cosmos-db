@@ -5,13 +5,19 @@ module.exports = function (RED) {
         const configNode = RED.nodes.getNode(n.config);
 
         node.client = configNode.client;
+        node.SqlString = configNode.SqlString;
 
         if (node.client) {
             node.container = node.client.database(n.database).container(n.container);
         }
 
         node.on('input', function (msg) {
-            msg.topic = n.query === "" ? msg.topic : n.query;
+            if (msg.params) {
+                const { query, params } = configNode.formatSQLString(n.query, msg.params);
+                msg.topic = node.SqlString.format(query, params);
+            } else {
+                msg.topic = n.query === "" ? msg.topic : n.query;
+            }
             if (msg.topic !== "") {
                 node.container.items
                     .query({ query: msg.topic })
@@ -19,9 +25,14 @@ module.exports = function (RED) {
                     .then(items => {
                         msg.payload = items;
                         node.send(msg);
+                    })
+                    .catch(e => {
+                        node.error(`Something went wrong while processing the query.\nNote that only values can be replaced with prepared statements, not table or variable names!\n\n${msg.topic}`)
+                        throw Error
                     });
             } else {
                 node.error("No query specified in msg.topic or node configuration!")
+                throw SyntaxError
             }
         });
     }
