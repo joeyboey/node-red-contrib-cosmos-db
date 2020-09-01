@@ -65,7 +65,7 @@ The reference for the SQL-Syntax can be found in the [Microsoft SQL Docs][micros
 
 ## License
 
-[MIT](LICENSE)
+[ISC](LICENSE)
 
 [npm-version-image]: https://img.shields.io/npm/v/node-red-contrib-cosmos-db.svg
 [npm-downloads-image]: https://img.shields.io/npm/dm/node-red-contrib-cosmos-db.svg
