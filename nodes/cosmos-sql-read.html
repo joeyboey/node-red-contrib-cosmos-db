@@ -7,7 +7,8 @@
             config: { value: "", type: "cosmos-config", required: true },
             database: { value: "", required: true },
             container: { value: "", required: true },
-            query: { value: "" }
+            query: { value: "" },
+            exposeAPI: { value: false }
         },
         inputs: 1,
         outputs: 1,
@@ -56,6 +57,10 @@
         <label for="node-input-query-editor"><i class="fa fa-tag"></i> Query</label>
         <div style="height: 250px; min-height:150px;" class="node-text-editor" id="node-input-query-editor"></div>
     </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-exposeAPI" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
+        <label style="width: auto;" for="node-input-exposeAPI"><span data-i18n="node-red:switch.label.exposeAPI">expose Cosmos API Container Object</span></label>
+    </div>
 </script>
 
 <script type="text/html" data-help-name="cosmos-sql-read">
@@ -63,24 +68,28 @@
 
     <h3>Properties</h3>
         <dl class="message-properties">
-            <dt class="optional">Cosmos DB Config <span class="property-type">cosmos-config-node</span></dt>
+            <dt class="required">Cosmos DB Config <span class="property-type">cosmos-config-node</span></dt>
             <dd> Cosmos Database to connect with.</dd>
         </dl>
         <dl class="message-properties">
-            <dt class="optional">Name <span class="property-type">string</span></dt>
+            <dt class="required">Name <span class="property-type">string</span></dt>
             <dd> The displayed name of the node.</dd>
         </dl>
         <dl class="message-properties">
-            <dt class="optional">Database <span class="property-type">string</span></dt>
+            <dt class="required">Database <span class="property-type">string</span></dt>
             <dd> Database ID from the specified Cosmos DB.</dd>
         </dl>
         <dl class="message-properties">
-            <dt class="optional">Container <span class="property-type">string</span></dt>
+            <dt class="required">Container <span class="property-type">string</span></dt>
             <dd> Container ID within the specified database.</dd>
         </dl>
         <dl class="message-properties">
             <dt class="optional">Query <span class="property-type">string</span></dt>
             <dd> SQL Query to send to the database, can also be specified through <code>msg.topic</code>, this field overrides any values in <code>msg.topic</code> and overrides its value.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Expose API <span class="property-type">boolean</span></dt>
+            <dd> Option to expose the Container object from the Cosmos API on the output property <code>msg.cosmos</code>, this allows future operations like updating or deleting data.</dd>
         </dl>
 
     <h3>Prepared Statements</h3>
@@ -102,12 +111,28 @@
         <dt class="optional">topic <span class="property-type">string</span></dt>
         <dd> Optional Parameter to set the desired Query through the <code>msg.topic</code> property. However, anything specified in the query parameter will override this.</dd>
     </dl>
+    <dl class="message-properties">
+        <dt class="optional">params <span class="property-type">object</span></dt>
+        <dd> Option to specify parameters for prepared statements with the following format:<br><code>{"id": 1234, "city": "Berlin"}</code></dd>
+    </dl>
 
     <h3>Outputs</h3>
         <ol class="node-ports">
             <dl class="message-properties">
                 <dt>payload <span class="property-type">object</span></dt>
                 <dd>Outputs result from the database.</dd>
+            </dl>
+            <dl class="message-properties">
+                <dt>topic <span class="property-type">string</span></dt>
+                <dd>Specified query.</dd>
+            </dl>
+            <dl class="message-properties">
+                <dt>params <span class="property-type">object</span></dt>
+                <dd>Parameter Object from the input</dd>
+            </dl>
+            <dl class="message-properties">
+                <dt>cosmos <span class="property-type">object</span></dt>
+                <dd>Comsos Container API Object (if specified)</dd>
             </dl>
         </ol>
 </script>

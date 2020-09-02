@@ -24,6 +24,9 @@ module.exports = function (RED) {
                     .fetchAll()
                     .then(items => {
                         msg.payload = items;
+
+                        n.exposeAPI ? msg.cosmos = node.container : null;
+
                         node.send(msg);
                     })
                     .catch(e => {

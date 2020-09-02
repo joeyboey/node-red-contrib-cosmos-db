@@ -29,12 +29,14 @@ Right now there are to available options to install Node RED add-ons.
 npm install node-red-contrib-cosmos-db
 ```
 
+---
+
 ## Usage
 
 Right now the is just a single Node implemented, but this will change with
 upcoming versions.
 
-### Config Node
+## Config Node
 
 Before using any nodes you have to configure your Database. For that you have
 the option to create config nodes from within the normal nodes.
@@ -45,7 +47,7 @@ You only need 2 parameters from your Cosmos Database:
    `https://[instance-name].documents.azure.com:443/`
 2. The primary key, which is found under the **Keys** Tab in the Azure console.
 
-### SQL Node
+## SQL Node
 
 The SQL Node is used to perform read operations against a specified container.
 The query can be set by:
@@ -65,7 +67,7 @@ FROM c
 The reference for the SQL-Syntax can be found in the [Microsoft SQL
 Docs][microsoft-cosmos-sql-docs].
 
-#### Prepared Statements
+### Prepared Statements
 
 You also have the option to use prepared statements. For that the query has to
 be defined in the included editor within the node. This is to prevent
@@ -91,6 +93,27 @@ To fill the variables you use the `msg.params` object:
 
 Note that this method can only be used to replace values, not table names and value names. Such a replacement cannot be safely achieved without the risk of SQL-Injection. If you need such a feature, you can always generate the required query in a function node and write it to the `msg.topic` object.
 
+### Using the exposed API
+
+Within the node you have the option to expose the container object, which is loosley described in the [Node.js documentation][microsoft-cosmos-node-js-docs]. This allows you to use operations like replace or delete. If the option is checked, the API will be exposed on the `msg.cosmos` property, and can be used like this:
+
+```js
+//Get the desired resource
+let data = msg.payload.resources[0];
+//Change whatever you like
+data.city = "Berlin";
+//Write the updated data to Cosmos
+msg.cosmos
+    .item(data.id)
+    .replace(data).then(o => {
+        //Then part is used to wait for the object to complete, you do not have to do this.
+        msg.replacedItem = o;
+        node.send(msg);
+    });
+```
+
+---
+
 ## License
 
 [ISC](LICENSE)
@@ -101,4 +124,5 @@ Note that this method can only be used to replace values, not table names and va
 [node-image]: https://img.shields.io/node/v/node-red-contrib-cosmos-db.svg
 [node-url]: https://nodejs.org/en/download
 [microsoft-cosmos-sql-docs]: https://docs.microsoft.com/azure/cosmos-db/sql-query-getting-started
+[microsoft-cosmos-node-js-docs]: https://docs.microsoft.com/de-de/azure/cosmos-db/sql-api-sdk-node
 [sqlstring-npmjs]: https://www.npmjs.com/package/sqlstring
