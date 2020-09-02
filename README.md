@@ -61,7 +61,7 @@ The second option will always override any topic that was specified beforehand.
 
 ```sql
 SELECT *
-FROM c
+FROM   c
 ```
 
 The reference for the SQL-Syntax can be found in the [Microsoft SQL
@@ -77,9 +77,9 @@ The node uses `?variable` in the statement, so the query should look something l
 
 ```sql
 SELECT *
-FROM c
-WHERE c.id = ?id
-  AND c.city = ?city
+FROM   c
+WHERE  c.id = ?id
+  AND  c.city = ?city
 ```
 
 To fill the variables you use the `msg.params` object:
