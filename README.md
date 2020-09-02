@@ -112,6 +112,13 @@ msg.cosmos
     });
 ```
 
+### Relay original Payload
+
+When updating or creating new items it is useful to keep the original payload. I
+used to achieve this with a function node in front of the query node. The second
+checkbox wihtin the node allows the user to skip this step. When enabled the
+original payload gets written to `msg.initialPayload`.
+
 ---
 
 ## License

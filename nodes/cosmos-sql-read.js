@@ -23,6 +23,8 @@ module.exports = function (RED) {
                     .query({ query: msg.topic })
                     .fetchAll()
                     .then(items => {
+                        n.relayPayload ? msg.initialPayload = msg.payload : null;
+
                         msg.payload = items;
 
                         n.exposeAPI ? msg.cosmos = node.container : null;

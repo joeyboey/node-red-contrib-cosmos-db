@@ -8,7 +8,8 @@
             database: { value: "", required: true },
             container: { value: "", required: true },
             query: { value: "" },
-            exposeAPI: { value: false }
+            exposeAPI: { value: false },
+            relayPayload: { value: false }
         },
         inputs: 1,
         outputs: 1,
@@ -61,6 +62,10 @@
         <input type="checkbox" id="node-input-exposeAPI" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
         <label style="width: auto;" for="node-input-exposeAPI"><span data-i18n="node-red:switch.label.exposeAPI">expose Cosmos API Container Object</span></label>
     </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-relayPayload" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
+        <label style="width: auto;" for="node-input-relayPayload"><span data-i18n="node-red:switch.label.relayPayload">relay Payload to msg.initialPayload</span></label>
+    </div>
 </script>
 
 <script type="text/html" data-help-name="cosmos-sql-read">
@@ -90,6 +95,10 @@
         <dl class="message-properties">
             <dt class="optional">Expose API <span class="property-type">boolean</span></dt>
             <dd> Option to expose the Container object from the Cosmos API on the output property <code>msg.cosmos</code>, this allows future operations like updating or deleting data.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Relay Payload <span class="property-type">boolean</span></dt>
+            <dd> Option to keep the original payload under <code>msg.initialPayload</code>. Useful for updating and creating new items without writing the original payload to another variable before the Cosmos query.</dd>
         </dl>
 
     <h3>Prepared Statements</h3>
@@ -133,6 +142,10 @@
             <dl class="message-properties">
                 <dt>cosmos <span class="property-type">object</span></dt>
                 <dd>Comsos Container API Object (if specified)</dd>
+            </dl>
+            <dl class="message-properties">
+                <dt>initialPayload <span class="property-type">object</span></dt>
+                <dd>Original payload (if specified)</dd>
             </dl>
         </ol>
 </script>
