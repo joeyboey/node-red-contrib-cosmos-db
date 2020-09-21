@@ -31,7 +31,8 @@
   "node-red": {
     "nodes": {
       "cosmos-config": "./config/cosmos-config.js",
-      "cosmos-sql-read": "./nodes/cosmos-sql-read.js"
+      "cosmos-sql-read": "./nodes/cosmos-sql-read.js",
+      "cosmos-get-resource-token": "./nodes/cosmos-get-resource-token.js"
     }
   }
 }

@@ -13,6 +13,14 @@ module.exports = function (RED) {
         this.name = n.name;
         this.client = new CosmosClient({ endpoint, key });
 
+        //this.client.database("main").user("id").permission("id").read().then(p => {
+        //    p.resource._token
+        //}).catch()
+
+        //this.client.database("main").users.create({ id: oid }).then(u => {
+        //    
+        //})
+
         this.client.getReadEndpoint().then(endpoint => {
             this.warn(`Connected to Azure Cosmos DB instance at: ${endpoint}`);
         })
