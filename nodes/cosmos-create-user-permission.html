@@ -1,0 +1,68 @@
+<script type="text/javascript">
+    RED.nodes.registerType('cosmos-create-user-permission', {
+        category: 'function',
+        color: '#4894fe',
+        defaults: {
+            name: { value: "Cosmos User Permission", required: true },
+            config: { value: "", type: "cosmos-config", required: true },
+            permissionObject: { value: "permission", required: true },
+            userKey: { value: "req.user.oid", required: true },
+            database: { value: "", required: true },
+            exposeAPI: { value: false },
+            relayPayload: { value: false }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "db.svg",
+        label: function () {
+            return this.name || "cosmos-create-user-permission";
+        },
+        paletteLabel: "Cosmos create User & Permission",
+        oneditprepare: function () {
+            $("#node-input-permissionObject").typedInput({
+                type: "msg",
+                types: ["msg"],
+                typeField: "#node-input-permissionObject-type"
+            });
+
+            $("#node-input-userKey").typedInput({
+                type: "msg",
+                types: ["msg"],
+                typeField: "#node-input-userKey-type"
+            });
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="cosmos-create-user-permission">
+    <div class="form-row">
+        <label for="node-input-config"><i class="fa fa-tag"></i> Cosmos DB Config</label>
+        <input type="text" id="node-input-config" placeholder="Cosmos DB Config">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-permissionObject"><i class="fa fa-tag"></i> User Key</label>
+        <input type="text" id="node-input-permissionObject" placeholder="permission">
+        <input type="hidden" id="node-input-permissionObject-type">
+    </div>
+    <div class="form-row">
+        <label for="node-input-userKey"><i class="fa fa-tag"></i> User Key</label>
+        <input type="text" id="node-input-userKey" placeholder="req.user.oid">
+        <input type="hidden" id="node-input-userKey-type">
+    </div>
+    <div class="form-row">
+        <label for="node-input-database"><i class="fa fa-tag"></i> Database</label>
+        <input type="text" id="node-input-database" placeholder="database">
+    </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-exposeAPI" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
+        <label style="width: auto;" for="node-input-exposeAPI"><span data-i18n="node-red:switch.label.exposeAPI">expose Cosmos API Client Object</span></label>
+    </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-relayPayload" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
+        <label style="width: auto;" for="node-input-relayPayload"><span data-i18n="node-red:switch.label.relayPayload">relay Payload to msg.initialPayload</span></label>
+    </div>
+</script>

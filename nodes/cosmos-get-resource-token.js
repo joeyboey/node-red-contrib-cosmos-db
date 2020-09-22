@@ -13,30 +13,33 @@ module.exports = function (RED) {
         }
 
         node.on('input', function (msg) {
-            !msg.permissionType ? msg.permissionType = n.permissionType : null;
+            msg.permission = {
+                id: msg.payload.permission.id,
+                permissionMode: msg.payload.permission.permissionMode ? msg.payload.permission.permissionMode : "read",
+                resource: node.client.container(msg.payload.permission.container ? msg.payload.permission.container : n.container).url
+            };
 
-            msg.permissionType === "container" ? msg.permissionId = n.container : msg.permissionId = n.scope;
+            msg.payload.permission.resourcePartitionKey ? msg.permission.resourcePartitionKey = msg.payload.permission.resourcePartitionKey : null;
 
             let oid = getValue(n.userKey, msg);
 
+            n.exposeAPI ? msg.cosmos = node.client : null;
+
             if (oid !== "") {
-                node.client.user(oid).permission(msg.permissionId).read().then(p => {
-                    node.warn(p);
-                    msg.resourceToken = p.resource._token;
-                    n.exposeAPI ? msg.cosmos = node.client : null;
+                node.client.user(oid).permission(msg.permission.id).read().then(p => {
+                    msg.payload.permission = p.resource;
+                    delete msg.permission;
                     node.send(msg);
                 })
                     .catch(e => {
                         node.warn(Object.values(e));
                         if (e.substatus == 1003) {
                             node.warn(`User does not exist!`);
-                            msg.cosmosError = "noUser";
-                            n.exposeAPI ? msg.cosmos = node.client : null;
+                            msg.permissionError = "noUser";
                             node.send(msg);
                         } else if (e.code == 404 && typeof e.substatus === "undefined") {
                             node.warn(`Permission does not exist!`);
-                            msg.cosmosError = "noPermission";
-                            n.exposeAPI ? msg.cosmos = node.client : null;
+                            msg.permissionError = "noPermission";
                             node.send(msg);
                         } else {
                             node.error(`Something went wrong!\n${e.substatus}\n${e.body.message}`);

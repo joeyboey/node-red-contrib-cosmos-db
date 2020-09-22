@@ -21,8 +21,10 @@ module.exports = function (RED) {
         //    
         //})
 
+        //this.client.database("main").user("id").permissions.create({per})
+
         this.client.getReadEndpoint().then(endpoint => {
-            this.warn(`Connected to Azure Cosmos DB instance at: ${endpoint}`);
+            this.log(`Connected to Azure Cosmos DB instance at: ${endpoint}`);
         })
 
         this.formatSQLString = (query, params) => {
