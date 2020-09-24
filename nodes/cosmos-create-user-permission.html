@@ -9,7 +9,8 @@
             userKey: { value: "req.user.oid", required: true },
             database: { value: "", required: true },
             exposeAPI: { value: false },
-            relayPayload: { value: false }
+            relayPayload: { value: false },
+            onlyReadOverwrite: {value: true}
         },
         inputs: 1,
         outputs: 1,
@@ -64,5 +65,9 @@
     <div class="form-row">
         <input type="checkbox" id="node-input-relayPayload" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
         <label style="width: auto;" for="node-input-relayPayload"><span data-i18n="node-red:switch.label.relayPayload">relay Payload to msg.initialPayload</span></label>
+    </div>
+    <div class="form-row">
+        <input type="checkbox" id="node-input-onlyReadOverwrite" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
+        <label style="width: auto;" for="node-input-onlyReadOverwrite"><span data-i18n="node-red:switch.label.onlyReadOverwrite">always override Permission to READ</span></label>
     </div>
 </script>

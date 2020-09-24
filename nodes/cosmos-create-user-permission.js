@@ -17,6 +17,8 @@ module.exports = function (RED) {
             let permission = getValue(n.permissionObject, msg)
             let oid = getValue(n.userKey, msg);
 
+            n.onlyReadOverwrite ? permission.permissionMode = "read" : null;
+
             n.exposeAPI ? msg.cosmos = node.client : null;
 
             if (msg.permissionError === "noUser") {
@@ -37,7 +39,7 @@ module.exports = function (RED) {
                 })
                     .catch(e => node.error(e))
             } else {
-                node.error(`No user found in msg.${n.userKey} property.`)
+                node.error(`Unknown permission error: ${msg.permissionError}`)
                 throw SyntaxError
             }
         });
