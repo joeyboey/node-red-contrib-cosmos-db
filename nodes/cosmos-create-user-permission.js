@@ -26,7 +26,7 @@ module.exports = function (RED) {
                     node.warn(`User created!\n${JSON.stringify(u.resource)}`);
                     node.client.user(oid).permissions.create(permission).then(p => {
                         node.warn(`Permission created!\n${JSON.stringify(p.resource)}`);
-                        msg.payload.permission = p.resource;
+                        msg.payload = { permission: p.resource };
                         node.send(msg);
                     })
                         .catch(e => node.error(e))
@@ -34,7 +34,7 @@ module.exports = function (RED) {
                     .catch(e => node.error(e));
             } else if (msg.permissionError === "noPermission") {
                 node.client.user(oid).permissions.create(permission).then(p => {
-                    msg.payload.permission = p.resource;
+                    msg.payload = { permission: p.resource };
                     node.send(msg);
                 })
                     .catch(e => node.error(e))
