@@ -14,7 +14,7 @@ module.exports = function (RED) {
 
         node.on('input', function (msg) {
             msg.permission = {
-                id: msg.payload.permission.id,
+                id: typeof msg.payload.permission.id === "undefined" ? msg.payload.permission.container : msg.payload.permission.id,
                 permissionMode: msg.payload.permission.permissionMode ? msg.payload.permission.permissionMode : "read",
                 resource: node.client.container(msg.payload.permission.container ? msg.payload.permission.container : n.container).url
             };
