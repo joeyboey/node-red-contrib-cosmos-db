@@ -5,11 +5,9 @@
         defaults: {
             name: { value: "Cosmos Token", required: true },
             config: { value: "", type: "cosmos-config", required: true },
-            permissionType: { value: "partition", required: true },
             userKey: { value: "req.user.oid", required: true },
             database: { value: "", required: true },
             container: { value: "", required: false },
-            scope: { value: "", required: false },
             exposeAPI: { value: false },
             relayPayload: { value: false }
         },
@@ -21,22 +19,12 @@
         },
         paletteLabel: "Cosmos Resource Token",
         oneditprepare: function () {
-            this.permissionType === "container" ? $("#toggle-container").addClass("selected") : $("#toggle-partition").addClass("selected");
-
-            $(".permissionType-button-group").on("click", function () {
-                $(".permissionType-button-group").removeClass("selected");
-                $(this).addClass("selected");
-            });
-
             $("#node-input-userKey").typedInput({
                 type: "msg",
                 types: ["msg"],
                 typeField: "#node-input-userKey-type"
             })
-        },
-        oneditsave: function () {
-            this.permissionType = $(".selected.permissionType-button-group").attr("value");
-        },
+        }
     });
 </script>
 
@@ -48,13 +36,6 @@
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-    <div class="form-row">
-        <label for="button-group"><i class="fa fa-tag"></i> Type</label>
-        <span class="button-group">
-            <button id="toggle-container" type="button" value="container" class="red-ui-button toggle permissionType-button-group">Container</button>
-            <button id="toggle-partition" type="button" value="partition" class="red-ui-button toggle permissionType-button-group">Partition Key</button>
-        </span>
     </div>
     <div class="form-row">
         <label for="node-input-userKey"><i class="fa fa-tag"></i> User Key</label>
@@ -70,10 +51,6 @@
         <input type="text" id="node-input-container" placeholder="Container">
     </div>
     <div class="form-row">
-        <label for="node-input-scope"><i class="fa fa-tag"></i> Scope</label>
-        <input type="text" id="node-input-scope" placeholder="scope">
-    </div>
-    <div class="form-row">
         <input type="checkbox" id="node-input-exposeAPI" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
         <label style="width: auto;" for="node-input-exposeAPI"><span data-i18n="node-red:switch.label.exposeAPI">expose Cosmos API Client Object</span></label>
     </div>
@@ -81,4 +58,62 @@
         <input type="checkbox" id="node-input-relayPayload" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
         <label style="width: auto;" for="node-input-relayPayload"><span data-i18n="node-red:switch.label.relayPayload">relay Payload to msg.initialPayload</span></label>
     </div>
+</script>
+
+<script type="text/html" data-help-name="cosmos-get-resource-token">
+    <p>A node that allows to get resource Tokens for a permission on Cosmos DB</p>
+    <p>You can either specify the parameters within the node, or pass all relevant data via the <code>msg.payload.permission</code> object specified like this:</p>
+    <code>{<br>id: string,<br>permissionMode: "none" | "read" | "all",<br>container: string,<br>resourcePartitionKey?: string | any[]<br>}</code>
+
+    <h3>Properties</h3>
+        <dl class=message-properties">
+            <dt class="required">Cosmos DB Config <span class="property-type">cosmos-config-node</span></dt>
+            <dd> Cosmos Database to connect with.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="required">Name <span class="property-type">string</span></dt>
+            <dd> The displayed name of the node.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="required">User Key <span class="property-type">string</span></dt>
+            <dd> Cosmos DB user Key</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="required">Database <span class="property-type">string</span></dt>
+            <dd> Database ID from the specified Cosmos DB.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Container <span class="property-type">string</span></dt>
+            <dd> Container ID within the specified database.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Expose API <span class="property-type">boolean</span></dt>
+            <dd> Option to expose the Client object from the Cosmos API on the output property <code>msg.cosmos</code>, this allows future operations like updating or deleting data.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Relay Payload <span class="property-type">boolean</span></dt>
+            <dd> Option to keep the original payload under <code>msg.initialPayload</code>. Useful for updating and creating new items without writing the original payload to another variable before the Cosmos query.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">override Permission to READ <span class="property-type">boolean</span></dt>
+            <dd> Option to always override the <code>permission.permissionMode</code> option to READ. That way it is insured that the node only creates read permissions.</dd>
+        </dl>
+
+    <h3>Outputs</h3>
+        <ol class="node-ports">
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Outputs the permission updated with the aquired token in the format of:<br>
+                    <code>{ permission:{<br>"id": 1234,<br>"permissionMode": "read",<br>"resource": "/tmp",<br>"_token": "token"<br>}}</code>
+                </dd>
+            </dl>
+            <dl class="message-properties">
+                <dt>cosmos <span class="property-type">object</span></dt>
+                <dd>Comsos Client API Object (if specified)</dd>
+            </dl>
+            <dl class="message-properties">
+                <dt>initialPayload <span class="property-type">object</span></dt>
+                <dd>Original payload (if specified)</dd>
+            </dl>
+        </ol>
 </script>
