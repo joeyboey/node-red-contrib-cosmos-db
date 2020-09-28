@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('cosmos-get-resource-token', {
         category: 'function',
-        color: '#4894fe',
+        color: '#9494fe',
         defaults: {
             name: { value: "Cosmos Token", required: true },
             config: { value: "", type: "cosmos-config", required: true },
@@ -13,7 +13,7 @@
         },
         inputs: 1,
         outputs: 1,
-        icon: "db.svg",
+        icon: "font-awesome/fa-user-secret",
         label: function () {
             return this.name || "cosmos-get-resource-token";
         },

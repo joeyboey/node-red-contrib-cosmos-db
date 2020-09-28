@@ -33,8 +33,7 @@ npm install node-red-contrib-cosmos-db
 
 ## Usage
 
-Right now the is just a single Node implemented, but this will change with
-upcoming versions.
+There are a total of three nodes implemented.
 
 ## Config Node
 
@@ -118,6 +117,48 @@ When updating or creating new items it is useful to keep the original payload. I
 used to achieve this with a function node in front of the query node. The second
 checkbox within the node allows the user to skip this step. When enabled the
 original payload gets written to `msg.initialPayload`.
+
+## Authentication
+
+In Addition to SQL queries, the other nodes allow you to acquire resource tokens
+from the database, aswell as the creation of permissions on the database.
+
+### Resource Token Node
+
+The node takes a permission object as input. In addition to that, some
+parameters can be altered in the node config. Although they will not override any variable from the input object `msg.payload.permission`. The object is defined as follows:
+
+```ts
+export declare interface Permission {
+    /** The id of the permission */
+    id: string;
+    /** The mode of the permission */
+    permissionMode: "none" | "read" | "all";
+    /** The id of the container that the permission will be applied to. */
+    container: string;
+    /** Partitions Keys for the Permission, optional */
+    resourcePartitionKey?: string | any[];
+}
+```
+
+If a permission with the specified id exists, the resulting permission object,
+including the resource token will be returned on `msg.payload.permission`,
+overriding the input.
+
+If no permission is found, the `msg.payload.permission` will be unaltered. In
+addition the property `msg.permissionError` can be set to the following options:
+
+- `noUser`: there is no user with the user id specified within the node config
+- `noPermission`: while the user exists, there is no permission with the
+  specified id in the permission object.
+
+### Create Permissions Node
+
+The second auth node is used to create new permissions based on the same
+interface described above.
+
+The output of the node is the same as the resource token node, when a token is
+successfully retrieved.
 
 ---
 

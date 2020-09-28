@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-cosmos-db",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "node red module to connect to azure cosmos db",
   "main": "./nodes/cosmos-nodes.js",
   "scripts": {

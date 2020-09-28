@@ -1,7 +1,7 @@
 <script type="text/javascript">
     RED.nodes.registerType('cosmos-create-user-permission', {
         category: 'function',
-        color: '#4894fe',
+        color: '#9494aa',
         defaults: {
             name: { value: "Cosmos User Permission", required: true },
             config: { value: "", type: "cosmos-config", required: true },
@@ -14,7 +14,7 @@
         },
         inputs: 1,
         outputs: 1,
-        icon: "db.svg",
+        icon: "font-awesome/fa-unlock-alt",
         label: function () {
             return this.name || "cosmos-create-user-permission";
         },
