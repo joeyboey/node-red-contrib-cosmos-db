@@ -45,7 +45,7 @@
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
     <div class="form-row">
-        <label for="node-input-permissionObject"><i class="fa fa-tag"></i> User Key</label>
+        <label for="node-input-permissionObject"><i class="fa fa-tag"></i> Permission</label>
         <input type="text" id="node-input-permissionObject" placeholder="permission">
         <input type="hidden" id="node-input-permissionObject-type">
     </div>
@@ -68,6 +68,62 @@
     </div>
     <div class="form-row">
         <input type="checkbox" id="node-input-onlyReadOverwrite" style="display: inline-block; width: auto; vertical-align: top;" autocomplete="off">
-        <label style="width: auto;" for="node-input-onlyReadOverwrite"><span data-i18n="node-red:switch.label.onlyReadOverwrite">always override Permission to READ</span></label>
+        <label style="width: auto;" for="node-input-onlyReadOverwrite"><span data-i18n="node-red:switch.label.onlyReadOverwrite">override Permission to READ</span></label>
     </div>
+</script>
+
+<script type="text/html" data-help-name="cosmos-create-user-permission">
+    <p>A node that allows to create Permissions on Cosmos DB</p>
+
+    <h3>Properties</h3>
+        <dl class="message-properties">
+            <dt class="required">Cosmos DB Config <span class="property-type">cosmos-config-node</span></dt>
+            <dd> Cosmos Database to connect with.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="required">Name <span class="property-type">string</span></dt>
+            <dd> The displayed name of the node.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="required">Permission <span class="property-type">string</span></dt>
+            <dd> Permission Object to create a permission for.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="required">User Key <span class="property-type">string</span></dt>
+            <dd> Cosmos DB user Key</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="required">Database <span class="property-type">string</span></dt>
+            <dd> Database ID from the specified Cosmos DB.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Expose API <span class="property-type">boolean</span></dt>
+            <dd> Option to expose the Client object from the Cosmos API on the output property <code>msg.cosmos</code>, this allows future operations like updating or deleting data.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">Relay Payload <span class="property-type">boolean</span></dt>
+            <dd> Option to keep the original payload under <code>msg.initialPayload</code>. Useful for updating and creating new items without writing the original payload to another variable before the Cosmos query.</dd>
+        </dl>
+        <dl class="message-properties">
+            <dt class="optional">override Permission to READ <span class="property-type">boolean</span></dt>
+            <dd> Option to always override the <code>permission.permissionMode</code> option to READ. That way it is insured that the node only creates read permissions.</dd>
+        </dl>
+
+    <h3>Outputs</h3>
+        <ol class="node-ports">
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>Outputs the created permission in the format of:<br>
+                    <code>{ permission:{<br>"id": 1234,<br>"permissionMode": "read",<br>"resource": "/tmp",<br>"_token": "token"<br>}}</code>
+                </dd>
+            </dl>
+            <dl class="message-properties">
+                <dt>cosmos <span class="property-type">object</span></dt>
+                <dd>Comsos Client API Object (if specified)</dd>
+            </dl>
+            <dl class="message-properties">
+                <dt>initialPayload <span class="property-type">object</span></dt>
+                <dd>Original payload (if specified)</dd>
+            </dl>
+        </ol>
 </script>
