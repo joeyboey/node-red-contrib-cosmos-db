@@ -22,7 +22,7 @@ module.exports = function (RED) {
             n.exposeAPI ? msg.cosmos = node.client : null;
 
             if (msg.permissionError === "noUser") {
-                node.client.users.create({ id: msg.req.user.oid }).then(u => {
+                node.client.users.create({ id: oid }).then(u => {
                     node.warn(`User created!\n${JSON.stringify(u.resource)}`);
                     node.client.user(oid).permissions.create(permission).then(p => {
                         node.warn(`Permission created!\n${JSON.stringify(p.resource)}`);
@@ -39,8 +39,11 @@ module.exports = function (RED) {
                 })
                     .catch(e => node.error(e))
             } else {
-                node.error(`Unknown permission error: ${msg.permissionError}`)
-                throw SyntaxError
+                node.client.user(oid).permission(permission.id).replace(permission).then(p => {
+                    msg.payload = { permission: p.resource };
+                    node.send(msg);
+                })
+                    .catch(e => node.error(e))
             }
         });
     }
